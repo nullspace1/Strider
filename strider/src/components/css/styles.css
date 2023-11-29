@@ -1,0 +1,83 @@
+
+
+
+.container {
+    display: grid;
+    grid-template-columns: [columnLeft] 15% [columnCenter] 60% [columnRight] 25% [last-column];
+    grid-template-rows: [header] 5% [centerScreen] 50% [middleFooter] 20% [footer] 25% [last-row];
+    text-align: center;
+    height: 100vh; /* Use this to make sure your container fits the height of the viewport */
+    gap: 2px; /* Adjust or remove if this is causing additional space */
+    overflow: hidden; /* This will hide any overflow that could be causing the white bar */
+  }
+  
+/* Header styling */
+.Header {
+    background-color: #1F1F1F; /* Dark grey */
+    color: #FFFFFF; /* White text color for contrast */
+    grid-column: columnLeft / last-column;
+    grid-row: header / centerScreen;
+    padding: 10px;
+    border-bottom: 1px solid #333; /* Separating line */
+}
+
+/* PlanSelectorPanel styling */
+.PlanSelectorPanel {
+    background-color: #252525; /* Slightly lighter dark shade */
+    color: #CCCCCC; /* Light grey text for contrast */
+    grid-column: columnLeft / columnCenter;
+    grid-row: centerScreen / middleFooter;
+    padding: 10px;
+    border-right: 1px solid #333; /* Separating line */
+}
+
+/* ActivityStatisticsPanel styling */
+.ActivityStatisticsPanel {
+    background-color: #2E2E2E; /* Different dark shade */
+    color: #CCCCCC;
+    grid-column: columnLeft / columnCenter;
+    grid-row: middleFooter / last-row;
+    padding: 10px;
+    border-top: 1px solid #333; /* Separating line */
+    border-right: 1px solid #333; /* Separating line */
+}
+
+/* ActivityPanel styling */
+.ActivityPanel {
+    background-color: #373737; /* Another dark shade */
+    color: #CCCCCC;
+    grid-column: columnCenter / columnRight;
+    grid-row: middleFooter / last-row;
+    padding: 10px;
+    border-top: 1px solid #333; /* Separating line */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+/* Calendar styling */
+.Calendar {
+    background-color: #424242; /* Dark grey variant */
+    color: #CCCCCC;
+    grid-column: columnCenter / columnRight;
+    grid-row: centerScreen / middleFooter;
+    padding: 10px;
+    border-bottom: 1px solid #333; /* Separating line */
+    border-right: 1px solid #333; /* Separating line */
+}
+
+/* AthleteSelector styling */
+.AthleteSelector {
+    background-color: #4A4A4A; /* Lighter dark grey */
+    color: #CCCCCC;
+    grid-row: centerScreen / last-row;
+    grid-column: columnRight / last-column;
+    padding: 10px;
+    border-left: 1px solid #333; /* Separating line */
+}
+
+/* Adding borders to create separating lines */
+/* Note that 'gap' already creates a line effect between grid items. If you prefer borders, you can set gap to 0 and uncomment the border properties in the panels above. */

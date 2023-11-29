@@ -1,0 +1,203 @@
+.AthleteContainer {
+  display: grid;
+  grid-template-columns: 2.5% [one] 95% [two] 2.5% [three];
+  grid-template-rows: 1% [one] 31% [two] 3% [three] 60% [four] 5% [five];
+  height: 100vh;
+}
+
+.AthleteProperties {
+  grid-column: one / two;
+  grid-row: three / four;
+  background-color: #222;
+  border-radius: 1%;
+  border: 7px solid #222;
+  /* Change the color to black or any other visible color */
+  border-radius: 5%;
+  overflow-y: auto;
+  /* Habilita el desplazamiento vertical */
+}
+
+
+.AthleteList {
+  grid-column: one / two;
+  grid-row: one / two;
+  overflow-y: auto;
+  border: 7px solid #222;
+  /* Change the color to black or any other visible color */
+  border-radius: 5%
+}
+
+.CreateAthlete,
+.AthleteList {
+  grid-column: one / two;
+  grid-row: one / two;
+  overflow-y: auto;
+  border: 7px solid #222;
+  border-radius: 5%;
+}
+
+.CreateAthlete {
+  display: grid;
+  grid-template-rows: [cero] 90% [one] 10% [two];
+}
+
+.CreateAthleteEntries {
+  grid-row: cero / one
+}
+
+.CreateAthleteButtons {
+  margin-top: 6%;
+  grid-row: one / two
+}
+
+input[type='text'],
+input[type='number'] {
+    display: inline-block; /* Making sure it's properly aligned */
+    border: 1px solid #ccc; /* Grey border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* To handle the padding and border without affecting width */
+    background-color: #777; /* Light grey background */
+    color: #333; /* Darker text for contrast */
+    font-size: 16px; /* Readable font size */
+}
+
+input[type='text']:focus,
+input[type='number']:focus:focus {
+    border-color: #888; /* Slightly darker border on focus */
+    outline: none; /* Removing default focus outline */
+}
+
+
+
+
+.button {
+  background-color: #555;
+  /* Green */
+  border: solid #333;
+  color: white;
+  padding: 3px 3px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 15%;
+}
+
+.AthleteList div {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  /* Add a separator between items */
+}
+
+/* Scrollbar styling for webkit browsers */
+.AthleteList::-webkit-scrollbar {
+  width: 8px;
+  /* Width of the scrollbar */
+  border-radius: 20%;
+}
+
+.AthleteList::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  /* Track color */
+  border-radius: 2%;
+}
+
+.AthleteList::-webkit-scrollbar-thumb {
+  background: #888;
+  /* Handle color */
+}
+
+.AthleteList::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  /* Handle color on hover */
+}
+
+.AthleteProperties::-webkit-scrollbar {
+  width: 8px;
+  /* Width of the scrollbar */
+  border-radius: 5%;
+}
+
+.AthleteProperties::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  /* Track color */
+}
+
+.AthleteProperties::-webkit-scrollbar-thumb {
+  background: #888;
+  /* Handle color */
+}
+
+.AthleteProperties::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  /* Handle color on hover */
+}
+
+.AthleteEntry {
+  padding: 10px;
+  /* Padding inside each entry */
+  margin-bottom: 10px;
+  /* Space between each entry */
+  border: 1px solid #ccc;
+  /* Border around each entry */
+  border-radius: 5px;
+  /* Optional: Rounded corners for the border */
+  background-color: #444;
+  /* Optional: Background color for each entry */
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 3px;
+}
+
+.AthleteEntry.selected {
+  background-color: #666;
+  /* Highlight color for selected entry */
+}
+
+.AthletePropertiesEmpty {
+  font-size: 40px;
+  text-align: center;
+}
+
+/* Estilos para las secciones generales */
+.AthleteBasicData,
+.AthleteBasicCharacteristics,
+.AthleteStatistics {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  overflow-y: auto;
+  /* Habilita el desplazamiento vertical */
+
+}
+
+
+.AthleteBasicData h2,
+.AthleteBasicCharacteristics h2,
+.AthleteStatistics h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  color: #777;
+}
+
+
+/* Estilos para cada entrada */
+.entry {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  background-color: #111;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.field {
+  font-weight: bold;
+}
+
+.value {
+  /* Estilos opcionales para el valor */
+}

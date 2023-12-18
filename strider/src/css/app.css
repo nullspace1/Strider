@@ -1,0 +1,34 @@
+:root{
+--background_color: #64CCC5;
+--calendar-color: #04364A;
+--athlete-color: #176B87;
+}
+
+/* 
+#04364A
+#176B87
+#64CCC5
+#DAFFFB
+*/
+
+.App {
+    display: grid;
+    grid-template-columns: repeat(20,5%);
+    grid-template-rows: repeat(20,5%);
+    background-color: var(--background_color);
+    height: 100vh;
+    gap: 0.25%;
+    overflow: hidden;
+}
+
+.Calendar{
+    grid-column: 1 / 13;
+    grid-row: 1 / 21;
+    background-color: var(--calendar-color);
+}
+
+.Athlete{
+    grid-column: 13 / 21;
+    grid-row: 1 / 21;
+    background-color: var(--athlete-color);
+}

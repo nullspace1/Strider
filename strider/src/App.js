@@ -1,6 +1,7 @@
 import React from "react";
-import {useQuery} from "react-query";
+import { useQuery } from "react-query";
 import './css/app.css'
+import { Calendar } from "./Calendar";
 
 const { ipcRenderer } = window.require('electron')
 
@@ -13,48 +14,40 @@ const App = () => {
     };
 
     const fetchCalendars = async () => {
-        const calendars = await ipcRenderer.invoke('GET calendars');
+        const calendars = await ipcRenderer.invoke('GET calendar');
         return calendars;
     };
 
-    const [calendars, setCalendars] = React.useState([]);
-    const [athletes, setAthletes] = React.useState([]);
+    const [calendars, setCalendars] = React.useState(null);
+    const [athletes, setAthletes] = React.useState(null);
 
-    const {fetchedCalendars, statusCalendars} = useQuery('calendar', fetchCalendars);
-    const {fetchedAthletes, statusAthletes} = useQuery('athlete', fetchAthletes);
-
-    React.useEffect(() => {
-        setCalendars(fetchedCalendars)
-    },[calendars]);
+    const {  data : fetchedCalendars , status: statusCalendars } =  useQuery('calendar', fetchCalendars);
+    const { data: fetchedAthletes , status: statusAthletes } = useQuery('athlete', fetchAthletes);
 
     React.useEffect(() => {
-        setAthletes(fetchedAthletes);
-    },[athletes]);
+        if ((statusCalendars === `success` || statusAthletes === `success`)) {
+            setCalendars(fetchedCalendars)
+            setAthletes(fetchedAthletes)
+        }
+    },[fetchedCalendars,fetchedAthletes,statusAthletes,statusCalendars])
+
+    if (calendars === null || athletes === null) {
+        return <>Loading...</>
+    }
 
     return (
         <div className='App'>
-            <Calendar calendars={calendars} />
-            <Athlete athletes={athletes}/>
+            <Calendar calendars={calendars} athletes={athletes} setCalendars={setCalendars}/>
+            <Athlete athletes={athletes} />
         </div>
     );
 
 };
 
-function Calendar() {
-
-    return (
-        <div className='Calendar'>
-            
-        </div>
-    )
-
-
-}
-
 function Athlete() {
     return (
-        <div className='Athlete'>
-           
+        <div className='Athlete' >
+
         </div>
     )
 }

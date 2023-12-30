@@ -2,7 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
 const path = require('path');
 const url = require('url');
-const {ipcMain} = require('electron')
+const { ipcMain } = require('electron')
 
 let mainWindow;
 
@@ -47,7 +47,7 @@ knex.schema.hasTable('activities').then(exists => {
             table.integer('calendar_id').references('id').inTable('calendars').onDelete('cascade');
         })
     }
-}) 
+})
 
 
 
@@ -74,68 +74,44 @@ function createWindow() {
     });
 
 
-    
+
 }
 
-ipcMain.handle('get:calendar_identifiers_list', async (event) => {
-    const calendar_values = await knex('calendars').select('id').select('name')
+ipcMain.handle('GET calendar', async () => {
+    const calendar_values = await knex('calendars').select()
+    Promise.all(calendar_values.map(async c => {
+        c.activities = await knex('activities').select().where('calendar_id',c.id);
+        return c
+    }))
     return calendar_values;
 })
 
-ipcMain.handle('save:calendar', async(event, calendarName) => {
-    await knex('calendars').insert({name: calendarName}).onConflict('id').merge();
-})
-
-ipcMain.handle('get:athlete_identifiers', async (event,params) => {
-    const athlete_values = await knex('athletes').select('id').select('name')
+ipcMain.handle('GET athlete', async () => {
+    const athlete_values = await knex('athletes').select()
     return athlete_values;
 })
 
-ipcMain.handle('save:athlete', async(event,athlete) => {
-    delete athlete.age
-    await knex('athletes').insert(athlete).onConflict('id').merge()
-})
-
-ipcMain.handle('get:athlete_full_info', async (event, athlete)  => {
-    const athlete_full = await knex('athletes').select().where('id',athlete.id).first()
-    athlete_full.age = new Date().getFullYear() - new Date(athlete_full.birthday).getFullYear()
-    return athlete_full
-})
-
-ipcMain.handle('delete:athlete', async (event,athlete) => {
-    await knex('athletes').delete().where('id',athlete.id)
-})
-
-ipcMain.handle('get:full_calendar_info', async (event, calendar) => {
-    const calendar_full = await knex('calendars').select().where('id', calendar.id).first();
-    const activities = await knex('activities').select().where('calendar_id', calendar.id);
-
-    let organizedActivities = new Array(52).fill(null).map(() => new Array(7).fill(null));
-
-    activities.forEach(activity => {
-        const week = activity.week; 
-        const day = activity.day;   
-
-        if (week >= 1 && week <= 52 && day >= 1 && day <= 7) {
-            if (!organizedActivities[week - 1][day - 1]) {
-                organizedActivities[week - 1][day - 1] = [];
-            }
-            organizedActivities[week - 1][day - 1].push(activity);
+ipcMain.handle('CREATE calendar', async (event, name) => {
+     
+     const id = (await knex('calendars').insert({name: name}).onConflict().ignore())[0]
+     
+     for (let i = 1; i <= 52; i++){
+        for (let j = 1; j <= 7; j++){
+            await knex('activities').insert({week: i, day:j, name: "", calendar_id: id}).onConflict().ignore()
         }
-    });
+     }
 
-    return {
-        calendar: calendar_full,
-        activities: organizedActivities
-    };
-});
+     
+    const new_calendar = (await knex('calendars').select().where('id',id))[0]
+    const activities = await knex('activities').select().where('calendar_id',id);
+    new_calendar.activities = activities;
 
-ipcMain.handle('delete:calendar', async (event, calendar) => {
-    await knex('calendars').delete().where('id',calendar.id)
+    return new_calendar;
 })
 
-
-
+ipcMain.handle('DELETE calendar', async (event, id) => {
+    await knex('calendars').where('id', id).delete()
+})
 
 app.removeAllListeners('ready');
 app.whenReady().then(createWindow);

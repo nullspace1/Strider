@@ -1,34 +1,248 @@
-:root{
---background_color: #64CCC5;
---calendar-color: #04364A;
---athlete-color: #176B87;
+:root {
+    --background_color: #8C8C8C;
+    --athlete-color: rgb(50, 50, 50);
+    --calendar-color: rgb(65, 65, 65);
+    --calendar-header-color: #323232;
+    --border: 1px solid rgb(100, 100, 100);
+    --select-color: rgb(70, 70, 70);
+    --select-text-color: rgb(200, 200, 200);
+    --button-hover-color: rgb(120, 120, 120);
+    --calendar-week-selection-color: rgb(50, 50, 50);
+    --calendar-day-selection-color: rgb(50, 50, 50);
+    --week-color: rgb(65, 65, 65);
+    --week-selected-color: rgb(100, 100, 100);
+    --field-color: rgb(80,80,80);
+    --calendar-activity-color: rgb(50,50,50);
+    font-family: Arial, sans-serif;
+    
 }
-
-/* 
-#04364A
-#176B87
-#64CCC5
-#DAFFFB
-*/
 
 .App {
     display: grid;
-    grid-template-columns: repeat(20,5%);
-    grid-template-rows: repeat(20,5%);
+    grid-template-columns: repeat(20, 5%);
+    grid-template-rows: repeat(20, 5%);
     background-color: var(--background_color);
     height: 100vh;
-    gap: 0.25%;
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
-.Calendar{
+
+select,
+button {
+    background-color: var(--select-color);
+    color: var(--select-text-color);
+    border: 1px solid rgb(30, 30, 30);
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+}
+
+select {
+    width: 200px;
+}
+
+button:active {
+    background-color: var(--button-hover-color);
+}
+
+.Field, .SelectedWeekInfoRow .Entry {
+    margin-right: 10px;
+    line-height: 1.5;
+    min-width: 80px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center; 
+    background-color: var(--field-color);
+    border: var(--border);
+    font-size: 75%;
+}
+
+.RowAlign{
+    display: flex;
+    flex-direction: row;
+}
+
+.Calendar {
     grid-column: 1 / 13;
     grid-row: 1 / 21;
     background-color: var(--calendar-color);
+    display: grid;
+    grid-template-columns: repeat(20, 5%);
+    grid-template-rows: repeat(20, 5%);
 }
 
-.Athlete{
+.CalendarHeader {
+    grid-column: 1 / 21;
+    grid-row: 1 / 3;
+    background-color: var(--calendar-header-color);
+    border: var(--border);
+    border-right: 0px;
+    display: grid;
+    grid-template-columns: repeat(50, 2%);
+    grid-template-rows: repeat(50, 2%);
+}
+
+
+.CalendarHeaderComponents {
+    grid-row: 15 / 25;
+    grid-column: 2 / 50;
+}
+
+.CalendarHeaderList {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2.5%;
+}
+
+.CalendarHeaderCreateCalendarButton {
+    padding-left: 25%;
+    display: flex;
+    gap: 10%;
+}
+
+.CalendarWeekSelection {
+    grid-row: 4 / 6;
+    grid-column: 2 / 13;
+    border: var(--border);
+    background-color: var(--calendar-week-selection-color);
+    display: grid;
+    grid-template-columns: repeat(100, 1%);
+    grid-template-rows: repeat(100, 1%);
+}
+
+.WeekList {
+    grid-column: 2 / 60;
+    grid-row: 10 / 100;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 10px;
+    overflow-y: scroll;
+    border-right: var(--border);
+    padding-right: 10px;
+    
+}
+
+
+.WeekList::-webkit-scrollbar {
+    display: none;
+}
+
+
+.Week,
+.WeekSelected {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: var(--border);
+}
+
+.Selected {
+    background-color: var(--week-selected-color);
+}
+
+.SelectedWeekInfo {
+    grid-column: 62 / 100;
+    grid-row: 10 / 100;
+    overflow-x: hidden;
+}
+
+.SelectedWeekInfoRow{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 5px;
+}
+
+.SelectedWeekInfoRow input{
+    width: 105px;
+    text-align: center;
+}
+
+.CalendarDaySelection {
+    grid-row: 4 / 6;
+    grid-column: 14 / 20;
+    border: var(--border);
+    background-color: var(--calendar-day-selection-color);
+    overflow-y: scroll;
+}
+
+.CalendarDaySelection::-webkit-scrollbar{
+    display: none;
+}
+
+.DaySelectionAlign{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
+    margin-left: 3%;
+    gap: 4px;
+}
+
+.DaySelectionAlign .Field{
+    width: 50%;
+}
+
+
+.CalendarWeekSelectionSelectedWeekInfoYearEndWeek .Field{
+    width: 21%;
+    font-size: 12px;
+    font-family: 'Segoe UI';
+}
+
+.FieldWeekInfoAlign{
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.FieldWeekInfoYear{
+    width: 25%;
+    height: 10%;
+}
+
+.SelectedWeekInfoRow .Entry {
+    width: 140%;
+    background: white;
+}
+
+
+.CalendarWeekSelectionSelectedWeekInfoYearEndWeek .Shift{
+    position: relative;
+    right: 5%;
+}
+
+.CalendarWeekSelectionSelectedWeekInfoYear input{
+    font-size: 12px;
+    font-family: 'Segoe UI';
+}
+
+.CalendarActivity{
+    background-color: var(--calendar-activity-color);
+    grid-row: 7 / 20;
+    grid-column: 2 / 20;
+    border: var(--border);
+}
+
+.CalendarActivity h1{
+    text-align: center;
+    position: relative;
+    top: 45%;
+
+}
+
+
+.Athlete {
     grid-column: 13 / 21;
     grid-row: 1 / 21;
     background-color: var(--athlete-color);
+    border: var(--border);
 }

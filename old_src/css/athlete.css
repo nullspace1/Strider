@@ -1,0 +1,49 @@
+@import url(./app.css);
+
+.AthleteSection {
+    grid-column: one / two;
+    display: grid;
+    grid-template-rows: 40% 60%;
+}
+
+.AthleteList {
+    grid-row: 0 / 1;
+}
+
+.AthleteProperties {
+    grid-row: 2 / 3;
+    background-color: #333;
+    overflow-y: auto;
+}
+
+.CreateAthlete {
+    display: grid;
+    grid-template-rows: 80% 20%;
+}
+
+.CreateAthleteEntries {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    grid-row: 1 / 2;
+    border-radius: 1px;
+}
+
+.AthleteStatistics{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.CreateAthleteButtons {
+    grid-row: 2 / 3;
+}
+
+
+
+
+
+
+
+
+

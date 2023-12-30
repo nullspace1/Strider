@@ -1,0 +1,50 @@
+@import url(./app.css);
+
+.Calendar {
+
+    display: grid;
+    grid-template-rows: repeat(10, 10%);
+    grid-template-columns: repeat(10,10%);
+    grid-column: cero / one;
+}
+
+
+.ActivityPanel {
+    grid-row: 4 / 11;
+    grid-column: 4 / 11;
+}
+
+.ActivityStatisticsPanel {
+    grid-row: 4 / 19;
+    grid-column: 1 / 4;
+}
+
+.ListOfCalendars {
+    grid-column: 1 / 4;
+    grid-row: 1 / 4;
+}
+
+.SelectedCalendar {
+    grid-column: 4 / 11;
+    grid-row: 1 / 4;
+    display: grid;
+    grid-template-columns: repeat(10,10%);
+}
+
+.WeekSelection {
+    grid-column: 1 / 8;
+    overflow-y: scroll;
+}
+
+.Box{
+    background-color: #444;
+}
+
+.Boxactive{
+    background-color: #555;
+
+}
+
+.DayOfWeekSelection {
+    grid-column: 8 / 11;
+}

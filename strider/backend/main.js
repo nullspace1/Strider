@@ -42,8 +42,7 @@ knex.schema.hasTable('activities').then(exists => {
         return knex.schema.createTable('activities', table => {
             table.increments('id').primary();
             table.string('name');
-            table.integer('week');
-            table.integer('day');
+            table.date('date');
             table.integer('calendar_id').references('id').inTable('calendars').onDelete('cascade');
         })
     }
@@ -79,8 +78,13 @@ function createWindow() {
 
 ipcMain.handle('GET calendar', async () => {
     const calendar_values = await knex('calendars').select()
-    Promise.all(calendar_values.map(async c => {
-        c.activities = await knex('activities').select().where('calendar_id',c.id);
+    await Promise.all(calendar_values.map(async c => {
+        const activityMap = new Map();
+        const activitiesList = (await knex('activities').select().where('calendar_id', c.id));
+        activitiesList.forEach(a => {
+            activityMap.set(a.date, a)
+        })
+        c.activities = activityMap
         return c
     }))
     return calendar_values;
@@ -92,26 +96,23 @@ ipcMain.handle('GET athlete', async () => {
 })
 
 ipcMain.handle('CREATE calendar', async (event, name) => {
-     
-     const id = (await knex('calendars').insert({name: name}).onConflict().ignore())[0]
-     
-     for (let i = 1; i <= 52; i++){
-        for (let j = 1; j <= 7; j++){
-            await knex('activities').insert({week: i, day:j, name: "", calendar_id: id}).onConflict().ignore()
-        }
-     }
-
-     
-    const new_calendar = (await knex('calendars').select().where('id',id))[0]
-    const activities = await knex('activities').select().where('calendar_id',id);
-    new_calendar.activities = activities;
-
+    const [id] = (await knex('calendars').insert({ name: name }).onConflict().ignore())
+    const [new_calendar] = (await knex('calendars').select().where('id', id))
+    new_calendar.activities = new Map()
     return new_calendar;
 })
 
 ipcMain.handle('DELETE calendar', async (event, id) => {
     await knex('calendars').where('id', id).delete()
+    await knex('activities').where('calendar_id', id).delete()
 })
+
+ipcMain.handle('CREATE activity', async (event, calendar_id, date) => {
+    const [id] = await knex('activities').insert({ calendar_id: calendar_id, date: date, name: "" });
+    const [activity] = await knex('activities').select().where('id', id)
+    return activity
+})
+
 
 app.removeAllListeners('ready');
 app.whenReady().then(createWindow);

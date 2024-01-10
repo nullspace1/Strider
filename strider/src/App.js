@@ -14,13 +14,16 @@ const App = () => {
     };
 
     const fetchCalendars = async () => {
+        console.log('Fetching calendars...')
         const calendars = await ipcRenderer.invoke('GET calendar');
+        console.log(calendars)
         return calendars;
     };
 
     const [calendars, setCalendars] = React.useState(null);
     const [athletes, setAthletes] = React.useState(null);
 
+   
     const {  data : fetchedCalendars , status: statusCalendars } =  useQuery('calendar', fetchCalendars);
     const { data: fetchedAthletes , status: statusAthletes } = useQuery('athlete', fetchAthletes);
 
@@ -30,6 +33,7 @@ const App = () => {
             setAthletes(fetchedAthletes)
         }
     },[fetchedCalendars,fetchedAthletes,statusAthletes,statusCalendars])
+
 
     if (calendars === null || athletes === null) {
         return <>Loading...</>

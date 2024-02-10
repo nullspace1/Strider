@@ -1,0 +1,7 @@
+enum IDENTIFIER {
+    CALENDAR,
+    ACTIVITY,
+    ATHLETE
+}
+
+export {IDENTIFIER}

@@ -14,17 +14,20 @@
     "react-query": "^3.39.3",
     "react-scripts": "5.0.1",
     "sqlite3": "^5.1.6",
+    "typescript": "^5.3.3",
     "wait-on": "^7.2.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "build": "react-scripts build",
+    "build": "tsc && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "react-start": "react-scripts start",
     "electron-start": "wait-on http://127.0.0.1:3000 && electron .",
-    "start": "concurrently \"npm run react-start\" \"wait-on http://127.0.0.1:3000 && npm run electron-start\""
-  },
+    "start": "concurrently \"npm run react-start\" \"wait-on http://127.0.0.1:3000 && npm run electron-start\"",
+    "tsc": "tsc"
+}
+,
   "eslintConfig": {
     "extends": [
       "react-app",

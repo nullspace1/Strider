@@ -42,7 +42,9 @@ knex.schema.hasTable('activities').then(exists => {
         return knex.schema.createTable('activities', table => {
             table.increments('id').primary();
             table.string('name');
-            table.date('date');
+            table.integer('day');
+            table.integer('week');
+            table.integer('year');
             table.integer('calendar_id').references('id').inTable('calendars').onDelete('cascade');
         })
     }
@@ -72,48 +74,43 @@ function createWindow() {
         mainWindow = null;
     });
 
-
-
 }
 
-ipcMain.handle('GET calendar', async () => {
-    const calendar_values = await knex('calendars').select()
-    await Promise.all(calendar_values.map(async c => {
-        const activityMap = new Map();
-        const activitiesList = (await knex('activities').select().where('calendar_id', c.id));
-        activitiesList.forEach(a => {
-            activityMap.set(a.date, a)
-        })
-        c.activities = activityMap
-        return c
-    }))
-    return calendar_values;
+async function getAllCalendars(){
+    const calendars = await knex('calendars').select();
+    const calendarsWithActivities = await Promise.all(calendars.map(async (calendar) => {
+        const activities = await knex('activities')
+            .where('calendar_id', calendar.id)
+            .select();
+        return { calendar, activities };
+    }));
+    return calendarsWithActivities
+}
+
+ipcMain.handle('GET ALL CALENDAR', async () => {
+    return getAllCalendars();
 })
 
-ipcMain.handle('GET athlete', async () => {
-    const athlete_values = await knex('athletes').select()
-    return athlete_values;
+
+ipcMain.handle('SAVE CALENDAR', async (e,calendar) => {
+     await knex('calendars').insert(calendar).onConflict('id').merge()
 })
 
-ipcMain.handle('CREATE calendar', async (event, name) => {
-    const [id] = (await knex('calendars').insert({ name: name }).onConflict().ignore())
-    const [new_calendar] = (await knex('calendars').select().where('id', id))
-    new_calendar.activities = new Map()
-    return new_calendar;
+ipcMain.handle('SAVE ACTIVITY', async (event,activity) => {
+    await knex('activities').insert(activity).onConflict('id').merge()
 })
 
-ipcMain.handle('DELETE calendar', async (event, id) => {
-    await knex('calendars').where('id', id).delete()
-    await knex('activities').where('calendar_id', id).delete()
+
+ipcMain.handle('DELETE CALENDAR', async (event, calendar) => {
+    console.log(calendar)
+    await knex('calendars').delete().where('id',calendar.id)
+    await knex('activities').delete().where('calendar_id',calendar.id)
 })
 
-ipcMain.handle('CREATE activity', async (event, calendar_id, date) => {
-    const [id] = await knex('activities').insert({ calendar_id: calendar_id, date: date, name: "" });
-    const [activity] = await knex('activities').select().where('id', id)
-    return activity
-})
+
 
 
 app.removeAllListeners('ready');
 app.whenReady().then(createWindow);
+
 

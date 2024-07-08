@@ -44,8 +44,8 @@ function hayEntrenamientoSeleccionado() {
 	return idEntrenamiento.value != null;
 }
 
-function entrenamientoSeleccionado() {
-	return mesocicloSeleccionado().microcicloPorID(idMicrociclo.value).entrenamientoPorID(idEntrenamiento.value);
+function entrenamientoEstaSeleccionado(entrenamiento) {
+	return entrenamiento.id === idEntrenamiento.value;
 }
 
 function listaEntrenamientos() {
@@ -58,14 +58,21 @@ function seleccionarMesociclo(mesociclo) {
 	idEntrenamiento.value = null;
 }
 
-function borrarMesocicloSeleccionado(){
-	if(!hayMesocicloSeleccionado()) return;
+function borrarMesocicloSeleccionado() {
+	if (!hayMesocicloSeleccionado()) return;
 	const idABorrar = mesocicloSeleccionado().id;
 	idMesociclo.value = null;
 	idMicrociclo.value = null;
 	idEntrenamiento.value = null;;
-	props.borrarMesociclo(idABorrar);	
+	props.borrarMesociclo(idABorrar);
+}
 
+function entrenamientoSeleccionado() {
+	for (let i = 0; i < listaEntrenamientos().length; i++) {
+		if (listaEntrenamientos()[i].id === idEntrenamiento.value) {
+			return listaEntrenamientos()[i];
+		}
+	}
 }
 
 
@@ -81,7 +88,8 @@ function borrarMesocicloSeleccionado(){
 			<button @click="borrarMesocicloSeleccionado">D</button>
 		</div>
 		<ul>
-			<li :class="mesociclo.id === idMesociclo ? 'seleccionado' : ''" v-for="(mesociclo) in listaMesociclos.filter((mesociclo) => mesociclo.fechaInicio.getFullYear() === anioMesociclo)"
+			<li :class="mesociclo.id === idMesociclo ? 'seleccionado' : ''"
+				v-for="(mesociclo) in listaMesociclos.filter((mesociclo) => mesociclo.fechaInicio.getFullYear() === anioMesociclo)"
 				:key="mesociclo.id" @click="seleccionarMesociclo(mesociclo)">
 				{{ mesociclo.nombre }}
 			</li>
@@ -89,18 +97,18 @@ function borrarMesocicloSeleccionado(){
 	</div>
 	<div class="contenedor microciclos">
 		<p> Microciclo de Mesociclo </p>
-		<div class="listado-items" v-if="hayMesocicloSeleccionado()">
+		<div class="listado-items microciclos" v-if="hayMesocicloSeleccionado()">
 			<div :class="microcicloEstaSeleccionado(microciclo) ? 'calendario-microciclo seleccionado' : 'calendario-microciclo'"
-				v-for="(microciclo) in listaMicrociclos()"
-				:key="microciclo.id" @click="seleccionarMicrociclo(microciclo)">
+				v-for="(microciclo) in listaMicrociclos()" :key="microciclo.id"
+				@click="seleccionarMicrociclo(microciclo)">
 				{{ microciclo.semana }}
 			</div>
 		</div>
 	</div>
 	<div class="contenedor entrenamientos">
 		<p> Dia de Microciclo </p>
-		<div class="listado-items" v-if="hayMicrocicloSeleccionado()">
-			<div :class="entrenamientoSeleccionado(entrenamiento) ? 'calendario-entrenamiento seleccionado' : 'calendario-entrenamiento'"
+		<div class="listado-items entrenamientos" v-if="hayMicrocicloSeleccionado()">
+			<div :class="entrenamientoEstaSeleccionado(entrenamiento) ? 'calendario-entrenamiento seleccionado' : 'calendario-entrenamiento'"
 				v-for="(entrenamiento) in listaEntrenamientos()" :key="entrenamiento.id"
 				@click="idEntrenamiento = entrenamiento.id">
 				{{ entrenamiento.dia() }}

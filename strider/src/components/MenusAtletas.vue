@@ -1,8 +1,35 @@
 <script setup>
 
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
 
-defineProps(['empezarCreacionAtleta','listaAtletas']);
+const props = defineProps(['borrarAtleta','empezarCreacionAtleta','listaAtletas']);
+
+const idAtleta = ref(null);
+
+function atletaEstaSeleccionado(atleta) {
+	return idAtleta.value === atleta.id;
+}
+
+function seleccionarAtleta(atleta) {
+	idAtleta.value = atleta.id;
+}
+
+function hayAtletaSeleccionado() {
+	return idAtleta.value != null;
+}
+
+function atletaSeleccionado() {
+	for (let i = 0; i < props.listaAtletas.length; i++) {
+		if (props.listaAtletas[i].id === idAtleta.value) {
+			return props.listaAtletas[i];
+		}
+	}
+}
+
+function borrarAtletaSeleccionado() {
+	props.borrarAtleta(idAtleta.value);
+	idAtleta.value = null;
+}
 
 </script>
 
@@ -10,12 +37,12 @@ defineProps(['empezarCreacionAtleta','listaAtletas']);
 	<div class="contenedor atletas">
 		<p>Atletas</p>
 		<div class="botones">
-			<button @click="props.empezarCreacionAtleta">C</button>
-			<button>D</button>
+			<button @click="empezarCreacionAtleta">C</button>
+			<button @click="borrarAtletaSeleccionado">D</button>
 		</div>
 		<ul>
-			<li :class="atletaEstaSeleccionado(id) ? 'seleccionado' : ''" v-for="(atleta, id) in listaAtletas"
-				:key="atleta.nombre" @click="seleccionarAtleta(id)">
+			<li :class="atletaEstaSeleccionado(atleta) ? 'seleccionado' : ''" v-for="(atleta) in listaAtletas"
+				:key="atleta.nombre" @click="seleccionarAtleta(atleta)">
 				{{atleta.nombre }}
 			</li>
 		</ul>

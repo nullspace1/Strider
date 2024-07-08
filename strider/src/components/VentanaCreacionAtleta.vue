@@ -1,20 +1,21 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 
-defineProps(['cerrarCreacionAtleta', 'agregarAtleta']);
+const props = defineProps(['cerrarCreacionAtleta', 'agregarAtleta']);
 const nuevoAtleta = ref({
 	nombre: '',
 	apellido: '',
 	fechaNacimiento: ''
 })
 
-function completarCreacionAtleta(agregarAtleta) {
-	agregarAtleta(nuevoAtleta.value);
+function completarCreacionAtleta() {
+	props.agregarAtleta(nuevoAtleta.value.nombre, nuevoAtleta.value.apellido,nuevoAtleta.value.fechaNacimiento);
 	nuevoAtleta.value = {
 		nombre: '',
 		apellido: '',
 		fechaNacimiento: ''
 	}
+	props.cerrarCreacionAtleta();
 }
 
 
@@ -36,7 +37,7 @@ function completarCreacionAtleta(agregarAtleta) {
 			<label>Fecha de Nacimiento</label>
 			<input type="date" v-model="nuevoAtleta.fechaNacimiento" />
 		</div>
-		<button @click="completarCreacionAtleta(agregarAtleta)">Crear</button>
+		<button @click="completarCreacionAtleta()">Crear</button>
 	</div>
 </template>
 

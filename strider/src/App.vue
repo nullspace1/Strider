@@ -5,6 +5,7 @@ import {Atleta, Mesociclo} from './model'
 import VentanaCreacionMesociclo from './components/VentanaCreacionMesociclo.vue'
 import VentanaCreacionAtleta from './components/VentanaCreacionAtleta.vue'
 import MenusMesociclos from './components/MenusMesociclos.vue'
+import MenusAtletas from './components/MenusAtletas.vue';
 
 
 const mesociclos = ref([]);
@@ -57,6 +58,10 @@ function borrarMesociclo(idMesociclo){
     mesociclos.value = mesociclos.value.filter(mesociclo => mesociclo.id !== idMesociclo);
 }
 
+function borrarAtleta(idAtleta){
+    atletas.value = atletas.value.filter(atleta => atleta.id !== idAtleta);
+}
+
 
 
 </script>
@@ -65,9 +70,10 @@ function borrarMesociclo(idMesociclo){
     <div class="main">
         <VentanaCreacionMesociclo v-if="creandoMesociclo" :agregar-mesociclo="agregarMesociclo"
             :cerrar-creacion-mesociclo="cerrarCreacionMesociclo"/>
-        <VentanaCreacionAtleta v-if="creandoAtleta" :agregar-atleta="agregarAtleta"
-            :cerrar-creacion-atleta="cerrarCreacionAtleta" />
+        <VentanaCreacionAtleta v-if="creandoAtleta" :agregarAtleta="agregarAtleta"
+            :cerrarCreacionAtleta="cerrarCreacionAtleta" />
         <MenusMesociclos :empezarCreacionMesociclo="empezarCreacionMesociclo" :listaMesociclos="mesociclos" :borrarMesociclo="borrarMesociclo"/>
+        <MenusAtletas :borrarAtleta="borrarAtleta" :empezarCreacionAtleta="empezarCreacionAtleta" :listaAtletas="atletas"/>
     </div>
 </template>
 

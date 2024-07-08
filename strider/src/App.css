@@ -144,18 +144,14 @@ p {
     padding: 1vh;
 }
 
-
 .contenedor.atletas {
     grid-row: 15 / 30;
     grid-column: 1 / 6;
 }
 
-
 .contenedor.microciclos {
     grid-row: 1 / 5;
     grid-column: 7 / 20;
-    height: fit-content;
-    overflow-y: scroll;
 }
 
 .contenedor.entrenamientos {
@@ -175,13 +171,25 @@ p {
 .listado-items {
     display: flex;
     flex-direction: row;
-    gap: 1vh;
-    margin-left: 2vh;
+    gap: 1vw;
     flex-wrap: wrap;
-    height: 6vh;
     overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: #606060 #282828;
+}
+
+.listado-items.microciclos {
+    transform: translate(0%,-30%);
+    height: 4.6vh;
+    overflow-y: scroll;
+    margin-left: 1vh;
+}
+
+.listado-items.entrenamientos {
+    transform: translate(0%,-30%);
+    height: 4.6vh;
+    overflow-y: scroll;
+    margin-left: 2vh;
 }
 
 .listado-items::-webkit-scrollbar {
@@ -209,8 +217,8 @@ p {
 }
 
 .calendario-microciclo {
-    width: 5vh;
-    height: 5vh;
+    width: 4vh;
+    height: 4vw;
     color: #fff;
 }
 

@@ -2,12 +2,32 @@ import { calcularSemanaDelAño } from "@/Utils";
 
 class Atleta {
 
-    constructor(nombre, apellido, fechaNacimiento) {
+    constructor(nombre, apellido, fechaNacimiento, altura, peso, sexo, ubicacion, fechaComienzo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
+        this.altura = altura;
+        this.peso = peso;
+        this.sexo = sexo;
+        this.ubicacion = ubicacion;
+        this.fechaComienzo = fechaComienzo;
         this.id = Math.random().toString(16).slice(8);
+        this.ritmoMaximo = 0;
+        this.ritmoFondo = 0;
     }
+
+    getEdad(){
+        const hoy = new Date();
+        const fechaNacimiento = new Date(this.fechaNacimiento);
+        return hoy.getFullYear() - fechaNacimiento.getFullYear();
+    }
+
+    getAniosDeEntrenamiento() {
+        const hoy = new Date();
+        const fechaComienzo = new Date(this.fechaComienzo);
+        return hoy.getFullYear() - fechaComienzo.getFullYear();
+    }
+
 
 }
 

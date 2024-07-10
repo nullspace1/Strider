@@ -30,13 +30,18 @@ function cerrarCreacionMesociclo() {
     creandoMesociclo.value = false;
 }
 
-function agregarAtleta(nombre, apellido, fechaNacimiento) {
+function agregarAtleta(nombre, apellido, fechaNacimiento, altura, peso, sexo, ubicacion, fechaComienzo) {
     if (
         nombre &&
         apellido &&
-        fechaNacimiento
+        fechaNacimiento &&
+        altura &&
+        peso &&
+        sexo &&
+        ubicacion &&
+        fechaComienzo
     ) {
-        atletas.value.push(new Atleta(nombre, apellido, fechaNacimiento));
+        atletas.value.push(new Atleta(nombre, apellido, fechaNacimiento, altura, peso, sexo, ubicacion, fechaComienzo));
         cerrarCreacionAtleta();
     }
 }

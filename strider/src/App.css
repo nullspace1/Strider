@@ -1,5 +1,8 @@
+html {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 p {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: #e0e0e0;
 }
 
@@ -159,10 +162,6 @@ p {
     grid-column: 21 / 29;
 }
 
-.contenedor.detalle-atletas {
-    grid-row: 17 / 30;
-    grid-column: 7 / 29;
-}
 
 .contenedor p {
     margin-left: 1.5vh;
@@ -179,14 +178,14 @@ p {
 }
 
 .listado-items.microciclos {
-    transform: translate(0%,-30%);
+    transform: translate(0%, -30%);
     height: 4.6vh;
     overflow-y: scroll;
     margin-left: 1vh;
 }
 
 .listado-items.entrenamientos {
-    transform: translate(0%,-30%);
+    transform: translate(0%, -30%);
     height: 4.6vh;
     overflow-y: scroll;
     margin-left: 2vh;
@@ -217,14 +216,14 @@ p {
 }
 
 .calendario-microciclo {
-    width: 4vh;
-    height: 4vw;
+    max-width: 100%;
+    max-height: 100%;
     color: #fff;
 }
 
 .calendario-entrenamiento {
-    width: 20vh;
-    height: 5vh;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .contenedor.tabla-entrenamiento {
@@ -252,3 +251,56 @@ th {
     justify-content: center;
     border: 0.1vh solid #fff;
 }
+
+:root {
+    --grid-row-height: 1fr; /* Define the height of a single grid row */
+}
+
+:root {
+    --grid-row-height: 1fr; /* Define the height of a single grid row */
+}
+
+.contenedor.detalle-atletas {
+    grid-row: 17 / 30;
+    grid-column: 7 / 29;
+    padding: 1rem;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure it fills the assigned grid rows */
+}
+
+.info-atleta {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 0;
+    align-items: flex-start;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: scroll; /* Enable vertical scrolling */
+}
+
+.info-atleta h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.info-general,
+.info-estadisticas {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-general input[type="number"], 
+.info-estadisticas input[type="number"] {
+    border: none;
+    background: none;
+    font: inherit;
+    text-align: center;
+    width: 3em;
+}
+
